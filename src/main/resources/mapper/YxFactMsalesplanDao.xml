@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangwl.ssm.dao.YxFactMsalesplanDao">
+
+	<select id="queryAll" resultType="YxFactMsalesplan">
+		select * from YX_FACT_MSALESPLAN
+	</select>
+	<select id="queryMonthSalesplanByYear" resultType="YxFactMsalesplan">
+		select V_MM, sum(N_PLAN) N_PLAN, sum(N_NUM) N_NUM, sum(N_AREA) N_AREA, sum(N_MONEY) N_MONEY
+		  from YX_FACT_MSALESPLAN
+		 where  V_YYYY = '2017年'
+		 and V_BUILDNAME not like '%-%'
+		 group by V_MM
+		 order by V_MM
+	</select>
+	<select id="querySalesRate" resultType="YxFactMsalesplan">
+		select
+		rownum as rank,
+		V_BUILDNAME,
+		N_PLAN,
+		N_NUM,
+		N_AREA,
+		N_MONEY,
+		rate,
+		D_YM,
+		V_YYYY,
+		V_MM,
+		D_ETLTIME
+		from (select V_BUILDNAME,
+		N_PLAN,
+		N_NUM,
+		N_AREA,
+		N_MONEY / 10000 as N_MONEY,
+		N_MONEY / 10000 / N_PLAN as rate,
+		D_YM,
+		V_YYYY,
+		V_MM,
+		D_ETLTIME
+		from MJ_DW.YX_FACT_MSALESPLAN T0
+		where V_YYYY like #{0}
+		and N_PLAN &lt;&gt; 0
+		and V_BUILDNAME not like '%-%'
+		and ((REGEXP_LIKE(V_YYYY, to_char(sysdate, 'yyyy')) and
+		REGEXP_LIKE(V_MM, to_char(sysdate, 'mm'))) or
+		(v_yyyy &lt; to_char(sysdate, 'yyyy') and V_MM = #{1}))
+		order by rate desc)
+	</select>
+
+</mapper>

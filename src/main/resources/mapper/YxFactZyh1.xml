@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangwl.ssm.dao.YxFactZyh1Dao">
+
+	<select id="queryAll" resultType="YxFactZyh1">
+		 SELECT * from YX_FACT_ZYH1
+	</select>
+	<select id="queryMainSum" resultType="YxFactZyh1">
+		    select
+			sum(N_ZNUM) N_ZNUM,
+			sum(N_ZAREA) N_ZAREA,
+			sum(N_ZMONEY) N_ZMONEY
+			FROM YX_FACT_ZYH1
+	</select>
+	
+
+</mapper>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangwl.ssm.dao.YxFactRoomstatusDao">
+
+	<select id="queryAll" resultType="YxFactRoomstatus">
+		 SELECT * from YX_FACT_ROOMSTATUS
+	</select>
+	
+	<select id="queryMainSum" resultType="YxFactRoomstatus">
+		select a.v_type, sum(a.N_NUM) N_NUM, sum(a.N_AREA) N_AREA, b.N_MONEY
+		  from YX_FACT_ROOMSTATUS a
+		  left join (select v_type, sum(N_MONEY) N_MONEY
+					   from YX_FACT_ROOMSTATUS
+					  where to_char(N_ETLTIME, 'yyyy') || '年' like #{year}
+						and v_salestatus = '待售'
+					  group by v_type) b
+			on a.v_type = b.v_type
+		 where to_char(N_ETLTIME, 'yyyy') || '年'  like #{year}
+		   and v_salestatus = '待售'
+			or v_salestatus = '销控'
+		 group by a.v_type, b.N_MONEY
+		union
+		select ' 合计' v_type,
+			   sum(n_num) n_num,
+			   sum(n_area) n_area,
+			   sum(n_money) n_money
+		  from (select a.v_type, sum(a.N_NUM) N_NUM, sum(a.N_AREA) N_AREA, b.N_MONEY
+				  from YX_FACT_ROOMSTATUS a
+				  left join (select v_type, sum(N_MONEY) N_MONEY
+							  from YX_FACT_ROOMSTATUS
+							 where to_char(N_ETLTIME, 'yyyy') || '年' like #{year}
+							   and v_salestatus = '待售'
+							 group by v_type) b
+					on a.v_type = b.v_type
+				 where to_char(N_ETLTIME, 'yyyy') || '年' like #{year}
+				   and v_salestatus = '待售'
+					or v_salestatus = '销控'
+				 group by a.v_type, b.N_MONEY)
+		 order by V_TYPE desc
+	</select>
+
+	
+
+</mapper>

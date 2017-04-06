@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangwl.ssm.dao.YxFactHkyearDao">
+
+	<select id="queryAll" resultType="YxFactHkyear">
+		 SELECT * from yx_fee
+	</select>
+
+	<select id="querySumByYear" resultType="YxFactHkyear">
+	select
+		V_BUNAME,
+		D_ETLTIME,
+		sum(N_NUM)       N_NUM,
+		sum(N_AREA)      N_AREA,
+		sum(N_MONEY)     N_MONEY,
+		sum(N_QYNUM)     N_QYNUM,
+		sum(N_QYAREA)    N_QYAREA,
+		sum(N_QYMONEY)   N_QYMONEY,
+		sum(N_HKNUM)     N_HKNUM,
+		sum(N_FKMONEY)   N_FKMONEY,
+		sum(N_HKMONEY)   N_HKMONEY,
+		sum(N_WQYNUM)    N_WQYNUM,
+		sum(N_WQYWHKMNY) N_WQYWHKMNY,
+		sum(N_YQYNUM)    N_YQYNUM,
+		sum(N_YQYWHKMNY) N_YQYWHKMNY,
+		sum(N_WHKNUM)    N_WHKNUM,
+		sum(N_WHKMONEY)  N_WHKMONEY,
+		sum(N_MHKMONEY)  N_MHKMONEY
+		from YX_FACT_HKYEAR
+		where  to_char(D_ETLTIME,'yyyy')||'年' LIKE #{limit}
+		group by V_BUNAME,D_ETLTIME
+		union select
+		' 合计' as V_BUNAME,
+		D_ETLTIME,
+		sum(N_NUM)       N_NUM,
+		sum(N_AREA)      N_AREA,
+		sum(N_MONEY)     N_MONEY,
+		sum(N_QYNUM)     N_QYNUM,
+		sum(N_QYAREA)    N_QYAREA,
+		sum(N_QYMONEY)   N_QYMONEY,
+		sum(N_HKNUM)     N_HKNUM,
+		sum(N_FKMONEY)   N_FKMONEY,
+		sum(N_HKMONEY)   N_HKMONEY,
+		sum(N_WQYNUM)    N_WQYNUM,
+		sum(N_WQYWHKMNY) N_WQYWHKMNY,
+		sum(N_YQYNUM)    N_YQYNUM,
+		sum(N_YQYWHKMNY) N_YQYWHKMNY,
+		sum(N_WHKNUM)    N_WHKNUM,
+		sum(N_WHKMONEY)  N_WHKMONEY,
+		sum(N_MHKMONEY)  N_MHKMONEY
+		from YX_FACT_HKYEAR
+		where  to_char(D_ETLTIME,'yyyy')||'年' LIKE #{limit}
+		group by D_ETLTIME
+		order by V_BUNAME desc
+	</select>
+
+</mapper>

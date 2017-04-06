@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangwl.ssm.dao.YxFactSalesdayDao">
+
+	<select id="queryAll" resultType="YxFactSalesday">
+		 SELECT * from YX_FACT_SALESDAY
+	</select>
+
+	<select id="queryAllSum" resultType="YxFactSalesday">
+		select
+			V_AREANAME,
+			ETL_TIME,
+			sum(N_AREA) N_AREA,
+			sum(N_QYAREA) N_QYAREA,
+			sum(N_HOUSENUMBER) N_HOUSENUMBER,
+			sum(N_XSAMOUNT) N_XSAMOUNT,
+			sum(N_QYNUMBER) N_QYNUMBER,
+			sum(N_QYAMOUNT) N_QYAMOUNT,
+			sum(N_HKNUMBER) N_HKNUMBER,
+			sum(N_FKAMOUNT) N_FKAMOUNT,
+			sum(N_HKAMOUNT) N_HKAMOUNT,
+			sum(N_WQYNUMBER) N_WQYNUMBER,
+			sum(N_WQYWHKAMOUNT) N_WQYWHKAMOUNT,
+			sum(N_YQYNUMBER) N_YQYNUMBER,
+			sum(N_YQYWHKAMOUNT) N_YQYWHKAMOUNT,
+			sum(N_HJWHKNUMBER) N_HJWHKNUMBER,
+			sum(N_HJWHKAMOUNT) N_HJWHKAMOUNT
+			from
+			YX_FACT_SALESDAY
+			WHERE 1=1
+			group by V_AREANAME,ETL_TIME
+
+			union select
+			' 合计' as V_AREANAME,
+			ETL_TIME,
+			sum(N_AREA) N_AREA,
+			sum(N_QYAREA) N_QYAREA,
+			sum(N_HOUSENUMBER) N_HOUSENUMBER,
+			sum(N_XSAMOUNT) N_XSAMOUNT,
+			sum(N_QYNUMBER) N_QYNUMBER,
+			sum(N_QYAMOUNT) N_QYAMOUNT,
+			sum(N_HKNUMBER) N_HKNUMBER,
+			sum(N_FKAMOUNT) N_FKAMOUNT,
+			sum(N_HKAMOUNT) N_HKAMOUNT,
+			sum(N_WQYNUMBER) N_WQYNUMBER,
+			sum(N_WQYWHKAMOUNT) N_WQYWHKAMOUNT,
+			sum(N_YQYNUMBER) N_YQYNUMBER,
+			sum(N_YQYWHKAMOUNT) N_YQYWHKAMOUNT,
+			sum(N_HJWHKNUMBER) N_HJWHKNUMBER,
+			sum(N_HJWHKAMOUNT) N_HJWHKAMOUNT
+			from
+			YX_FACT_SALESDAY
+			WHERE 1=1
+			group by ETL_TIME
+			ORDER BY V_AREANAME DESC
+
+	</select>
+
+</mapper>
