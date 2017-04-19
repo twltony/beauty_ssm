@@ -32,6 +32,11 @@ public class YxFactSalesplanImpl implements YxFactSalesplanService {
 
 		return yxFactSalesplanDao.queryAllSum();
 	}
+	@Override
+	public List<YxFactSalesplan> getYearAll(){
+
+		return yxFactSalesplanDao.queryYearAll();
+	}
 
 
 	

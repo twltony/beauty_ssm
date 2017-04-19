@@ -14,6 +14,7 @@ public interface YxFactSalesplanDao {
     List<YxFactSalesplan> queryAll();
 
     List<YxFactSalesplan> queryAllSum();
+    List<YxFactSalesplan> queryYearAll();
 
     List<YxFactSalesplan> querySalesRate();
 

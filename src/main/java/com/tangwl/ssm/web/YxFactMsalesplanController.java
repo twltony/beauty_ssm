@@ -73,16 +73,13 @@ public class YxFactMsalesplanController {
 		List<String> salesPlanstatusList = new ArrayList<>();
 		Map<String,Double> salesYearMap = new HashMap<>();
 		//年度、月度销售情况
-		for(YxFactSalesplan yfs : salePlanList){
-			if(yfs.getvBuname().contains("合计")){
-				Double fmYearPlan =Double.parseDouble(formatUpperDouble(yfs.getnYearPlan()/10000));
-				Double fmYearMoney =Double.parseDouble(formatUpperDouble(yfs.getnYearMoney()/100000000));
-				salesYearMap.put("nYearPlan",fmYearPlan);
-				salesYearMap.put("nYearMoney",fmYearMoney);
-				salesYearMap.put("nYearpercent",Double.parseDouble(formatUpperDouble(fmYearMoney/fmYearPlan*100)));
-				salesYearMap=filterMonthData(salesYearMap,dataMonth,yfs);
-			}
-		}
+		Double fmYearPlan =Double.parseDouble(formatUpperDouble(salePlanList.get(0).getnYearPlan()/10000));
+		Double fmYearMoney =Double.parseDouble(formatUpperDouble(salePlanList.get(0).getnYearMoney()/10000));
+		salesYearMap.put("nYearPlan",fmYearPlan);
+		salesYearMap.put("nYearMoney",fmYearMoney);
+		salesYearMap.put("nYearpercent",Double.parseDouble(formatUpperDouble(fmYearMoney/fmYearPlan*100)));
+		salesYearMap=filterMonthData(salesYearMap,dataMonth,salePlanList.get(0));
+
 		//日销售情况
 		List<YxFactSalesday> salesDayList = yxFactSalesdayService.getAllSum();
 		for(YxFactSalesday yfsd: salesDayList){
@@ -190,14 +187,29 @@ public class YxFactMsalesplanController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/getSalesStatusMonth", method = RequestMethod.POST)
-	public Map<String, Object> getSalesStatusMonth(HttpServletResponse response){
+	@RequestMapping(value = "/getMarketMonth", method = RequestMethod.POST)
+	public Map<String, Object> getMarketMonth(HttpServletResponse response){
 		Map<String,Object> salesStatusMap = new HashedMap();
 		List<YxFactSalesplan> salePlanList = yxFactSalesplanService.getAllSum();
 		for(YxFactSalesplan yfs : salePlanList){
 			Map<String,Object> salesStatu = new HashedMap();
 			filterSalesStatusMonthData(dataMonth,yfs);
 		}
+
+		return salesStatusMap;
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/getMarketYear" , method = RequestMethod.GET)
+	public Map<String, Object> getMarketYear(HttpServletResponse response){
+		response.setHeader("Access-Control-Allow-Origin","*");
+		Map<String,Object> salesStatusMap = new HashedMap();
+		List<YxFactSalesplan> salePlanList = yxFactSalesplanService.getYearAll();
+		List<YxFactSalesplan> salePlanListSum = yxFactSalesplanService.getAllSum();
+		if (salePlanList.size()>0&&salePlanListSum.size()>0){
+			salePlanList.add(salePlanListSum.get(0));
+		}
+		salesStatusMap.put("yearList",salePlanList);
 
 		return salesStatusMap;
 	}
@@ -256,7 +268,7 @@ public class YxFactMsalesplanController {
 				break;
 			case "4":
 					fmMonthPlan= Double.parseDouble(formatUpperDouble(yfs.getnAprPlan()/10000));
-					fmMonthMoney = Double.parseDouble(formatUpperDouble(yfs.getnAprMoney()/100000000));
+					fmMonthMoney = Double.parseDouble(formatUpperDouble(yfs.getnAprMoney()/10000));
 					salesYearMap.put("nMonthPlan",fmMonthPlan);
 					salesYearMap.put("nMonthMoney",fmMonthMoney);
 					if(fmMonthPlan!=0.0) {
