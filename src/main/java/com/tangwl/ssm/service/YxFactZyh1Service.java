@@ -10,4 +10,14 @@ public interface YxFactZyh1Service {
 
 	List<YxFactZyh1> getMainSum();
 
+	List<YxFactZyh1> getByAreaType();
+
+	List<YxFactZyh1> getZyhByArea(String area);
+
+	List<YxFactZyh1> getAreaSum(String year,String type);
+
+	List<YxFactZyh1> getProjectbyArea(String area,String type);
+
+	List<String> getAreas();
+
 }

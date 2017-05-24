@@ -8,19 +8,19 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import com.tangwl.ssm.cache.RedisCache;
-import com.tangwl.ssm.dao.UserDao;
+//import com.tangwl.ssm.dao.UserDao;
 
 /**
  * 业务相关的作业调度
  * 
            字段               允许值                           允许的特殊字符
-	秒	 	0-59	 	, - * /
-	分	 	0-59	 	, - * /
-	小时	 	0-23	 	, - * /
-	日期	 	1-31	 	, - * ? / L W C
-	月份	 	1-12 或者 JAN-DEC	 	, - * /
-	星期	 	1-7 或者 SUN-SAT	 	, - * ? / L C #
-	年（可选）	 	留空, 1970-2099	 	, - * /
+			秒	 			0-59	 							, - * /
+			分	 			0-59	 							, - * /
+			小时	 			0-23	 							, - * /
+			日期	 			1-31	 							, - * ? / L W C
+			月份	 			1-12 或者 JAN-DEC	 				, - * /
+			星期	 			1-7 或者 SUN-SAT	 					, - * ? / L C #
+			年（可选）	 	留空, 1970-2099	 					, - * /
 	
 	*  字符代表所有可能的值
 	/  字符用来指定数值的增量
@@ -34,8 +34,8 @@ import com.tangwl.ssm.dao.UserDao;
 public class BizQuartz {
 
 	private final Logger LOG = LoggerFactory.getLogger(this.getClass());
-	@Autowired
-	private UserDao userDao;
+//	@Autowired
+//	private UserDao userDao;
 	@Autowired
 	private RedisCache cache;
 	
@@ -51,10 +51,10 @@ public class BizQuartz {
 	/**
 	 * 每隔5分钟定时清理缓存
 	 */
-//	@Scheduled(cron = "0 0/5 * * * ? ")
-//	public void cacheClear() {
-//		LOG.info("@Scheduled-------cacheClear()");
-//		cache.clearCache();
-//	}
+	@Scheduled(cron = "0 0/5 * * * ? ")
+	public void cacheClear() {
+		LOG.info("@Scheduled-------cacheClear()");
+		cache.clearCache();
+	}
 	
 }

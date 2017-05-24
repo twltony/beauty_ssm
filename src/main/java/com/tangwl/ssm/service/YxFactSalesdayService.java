@@ -8,6 +8,6 @@ public interface YxFactSalesdayService {
 
 	List<YxFactSalesday> getAllList();
 	List<YxFactSalesday> getAllSum();
-
+	List<YxFactSalesday> getProjectbyArea(String area);
 
 }

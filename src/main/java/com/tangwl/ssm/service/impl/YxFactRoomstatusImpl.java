@@ -23,12 +23,32 @@ public class YxFactRoomstatusImpl implements YxFactRoomstatusService {
 	
 	@Override
 	public List<YxFactRoomstatus> getAllList() {
-		return 	YxFactRoomstatusDao.queryAll();
+		String cache_key=RedisCache.CAHCENAME+"|YxFactRoomstatus|"+"|getAllList|";
+		//先去缓存中取
+		List<YxFactRoomstatus> result_cache=cache.getListCache(cache_key, YxFactRoomstatus.class);
+		if(result_cache==null) {
+			result_cache=YxFactRoomstatusDao.queryAll();
+			cache.putListCacheWithExpireTime(cache_key, result_cache, RedisCache.CAHCETIME);
+			LOG.info("put cache with key:"+cache_key);
+		}else{
+			LOG.info("get cache with key:"+cache_key);
+		}
+		return result_cache;
 	}
 
 	@Override
 	public List<YxFactRoomstatus> getMainSum(String year) {
-		return 	YxFactRoomstatusDao.queryMainSum(year);
+		String cache_key=RedisCache.CAHCENAME+"|YxFactRoomstatus|"+"|getMainSum|";
+		//先去缓存中取
+		List<YxFactRoomstatus> result_cache=cache.getListCache(cache_key, YxFactRoomstatus.class);
+		if(result_cache==null) {
+			result_cache=YxFactRoomstatusDao.queryMainSum(year);
+			cache.putListCacheWithExpireTime(cache_key, result_cache, RedisCache.CAHCETIME);
+			LOG.info("put cache with key:"+cache_key);
+		}else{
+			LOG.info("get cache with key:"+cache_key);
+		}
+		return result_cache;
 	}
 
 

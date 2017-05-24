@@ -45,5 +45,76 @@
 		(v_yyyy &lt; to_char(sysdate, 'yyyy') and V_MM = #{1}))
 		order by rate desc)
 	</select>
+	<select id="queryAreaMonthSales" resultType="YxFactMsalesplan">
+		select
+      	V_AREANAME,
+        sum(N_PLAN) as N_PLAN,
+        sum(N_NUM) as N_NUM,
+        sum(N_AREA) as N_AREA,
+        sum(N_MONEY/10000) as N_MONEY,
+        sum(N_MONEY) as N_MONEY,
+        D_YM,
+        V_YYYY,
+        V_MM
+    from
+        YX_FACT_MSALESPLAN
+    where 1=1
+        and V_YYYY like (#{year})
+        and V_MM like (#{month})
+        and V_BUILDNAME not like '%-%'
+        group by V_AREANAME,D_YM, V_YYYY, V_MM
+    union  select
+       ' 合计' as V_AREANAME,
+        sum(N_PLAN),
+        sum(N_NUM),
+        sum(N_AREA),
+        sum(N_MONEY/10000) ,
+        sum(N_MONEY),
+        D_YM,
+        V_YYYY,
+        V_MM
+    from
+        YX_FACT_MSALESPLAN
+    where 1=1
+        and V_YYYY like (#{year})
+        and V_MM like (#{month})
+        and V_BUILDNAME not like '%-%'
+        group by D_YM, V_YYYY, V_MM
+        order by V_AREANAME desc
+	</select>
 
+	<select id="queryProjectbyAreaMonth" resultType="YxFactMsalesplan">
+		select
+			   V_AREANAME as V_AREANAME,
+			   V_BUILDNAME as V_BUILDNAME,
+			   N_PLAN as N_PLAN,
+			   N_NUM as N_NUM,
+			   N_AREA as N_AREA,
+			   N_MONEY / 10000 N_MONEY,
+			   D_YM as D_YM,
+			   V_YYYY as V_YYYY,
+			   V_MM as V_MM,
+			   D_ETLTIME as D_ETLTIME
+		  from MJ_DW.YX_FACT_MSALESPLAN T0
+		 where T0.V_BUILDNAME not like '%-%'
+		   and T0.V_AREANAME = #{area}
+		   and V_MM in (#{month})
+		union select
+			   ' 合计' as V_AREANAME,
+			   ' 合计' as V_BUILDNAME,
+			   SUM(N_PLAN) as N_PLAN,
+			   SUM(N_NUM) as N_NUM,
+			   SUM(N_AREA) as N_AREA,
+			   SUM(N_MONEY) / 10000 N_MONEY,
+			   D_YM as D_YM,
+			   V_YYYY as V_YYYY,
+			   V_MM as V_MM,
+			   D_ETLTIME as D_ETLTIME
+		  from MJ_DW.YX_FACT_MSALESPLAN T0
+		 where T0.V_BUILDNAME not like '%-%'
+		   and T0.V_AREANAME = #{area}
+		   and V_MM in (#{month})
+		   group by D_YM,V_YYYY,V_MM,D_ETLTIME
+		   order by V_BUILDNAME DESC
+	</select>
 </mapper>

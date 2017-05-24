@@ -13,6 +13,9 @@ public interface YxFactMsalesplanService {
 
 	List<YxFactMsalesplan> getSalesRate(String year, String month);
 
+	List<YxFactMsalesplan> getAreaMonthSales(String year, String month);
+
+	List<YxFactMsalesplan> getProjectbyAreaMonth(String area, String month);
 
 	 
 }

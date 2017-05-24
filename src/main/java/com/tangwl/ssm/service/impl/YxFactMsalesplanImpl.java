@@ -24,31 +24,80 @@ public class YxFactMsalesplanImpl implements YxFactMsalesplanService {
 	
 	@Override
 	public List<YxFactMsalesplan> getAllList() {
-		//String cache_key=RedisCache.CAHCENAME+"|getUserList|"+offset+"|"+limit;
+		String cache_key=RedisCache.CAHCENAME+"|YxFactMsalesplan|"+"|getAllList|";
 		//先去缓存中取
-		//List<YxFactMsalesplan> result_cache=cache.getListCache(cache_key, YxFactMsalesplan.class);
-		List<YxFactMsalesplan> result_cache=null;
-		if(result_cache==null){
-			//缓存中没有再去数据库取，并插入缓存（缓存时间为60秒）
+		List<YxFactMsalesplan> result_cache=cache.getListCache(cache_key, YxFactMsalesplan.class);
+		if(result_cache==null) {
 			result_cache=yxFactMsalesplanDao.queryAll();
-			//cache.putListCacheWithExpireTime(cache_key, result_cache, RedisCache.CAHCETIME);
-			//LOG.info("put cache with key:"+cache_key);
+			cache.putListCacheWithExpireTime(cache_key, result_cache, RedisCache.CAHCETIME);
+			LOG.info("put cache with key:"+cache_key);
 		}else{
-			//LOG.info("get cache with key:"+cache_key);
+			LOG.info("get cache with key:"+cache_key);
 		}
 		return result_cache;
 	}
 
 	@Override
 	public List<YxFactMsalesplan> getMonthSalesplanByYear(){
-		return yxFactMsalesplanDao.queryMonthSalesplanByYear();
+		String cache_key=RedisCache.CAHCENAME+"|YxFactMsalesplan|"+"|getMonthSalesplanByYear|";
+		//先去缓存中取
+		List<YxFactMsalesplan> result_cache=cache.getListCache(cache_key, YxFactMsalesplan.class);
+		if(result_cache==null) {
+			result_cache=yxFactMsalesplanDao.queryMonthSalesplanByYear();
+			cache.putListCacheWithExpireTime(cache_key, result_cache, RedisCache.CAHCETIME);
+			LOG.info("put cache with key:"+cache_key);
+		}else{
+			LOG.info("get cache with key:"+cache_key);
+		}
+		return result_cache;
 	}
 
 
 	@Override
 	public List<YxFactMsalesplan> getSalesRate(String year, String month){
+		String cache_key=RedisCache.CAHCENAME+"|YxFactMsalesplan|"+"|getSalesRate|";
+		//先去缓存中取
+		List<YxFactMsalesplan> result_cache=cache.getListCache(cache_key, YxFactMsalesplan.class);
+		if(result_cache==null) {
+			result_cache=yxFactMsalesplanDao.querySalesRate(year, month);
+			cache.putListCacheWithExpireTime(cache_key, result_cache, RedisCache.CAHCETIME);
+			LOG.info("put cache with key:"+cache_key);
+		}else{
+			LOG.info("get cache with key:"+cache_key);
+		}
+		return result_cache;
+	}
 
-		return yxFactMsalesplanDao.querySalesRate(year, month);
+	//获取区域月销售数据
+	@Override
+	public List<YxFactMsalesplan> getAreaMonthSales(String year, String month){
+		String cache_key=RedisCache.CAHCENAME+"|YxFactMsalesplan|"+"|getAreaMonthSales|"+year+month;
+		//先去缓存中取
+		List<YxFactMsalesplan> result_cache=cache.getListCache(cache_key, YxFactMsalesplan.class);
+		if(result_cache==null) {
+			result_cache=yxFactMsalesplanDao.queryAreaMonthSales(year, month);
+			cache.putListCacheWithExpireTime(cache_key, result_cache, RedisCache.CAHCETIME);
+			LOG.info("put cache with key:"+cache_key);
+		}else{
+			LOG.info("get cache with key:"+cache_key);
+		}
+		return result_cache;
+	}
+
+	//通过区域月份获取项目销售情况
+	@Override
+	public List<YxFactMsalesplan> getProjectbyAreaMonth(String area, String month){
+		String cache_key=RedisCache.CAHCENAME+"|YxFactMsalesplan|"+"|getProjectbyAreaMonth|"+area+month;
+		//先去缓存中取
+		List<YxFactMsalesplan> result_cache=cache.getListCache(cache_key, YxFactMsalesplan.class);
+		if(result_cache==null) {
+			result_cache=yxFactMsalesplanDao.queryProjectbyAreaMonth(area, month);
+			cache.putListCacheWithExpireTime(cache_key, result_cache, RedisCache.CAHCETIME);
+			LOG.info("put cache with key:"+cache_key);
+		}else{
+			LOG.info("get cache with key:"+cache_key);
+		}
+		return result_cache;
 	}
 	
 	

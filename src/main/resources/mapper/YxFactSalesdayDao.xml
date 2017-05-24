@@ -56,4 +56,42 @@
 
 	</select>
 
+	<select id="queryProjectbyArea" resultType="YxFactSalesday">
+
+    select
+			V_PROJNAME as V_PROJNAME,
+			V_NUMNAME as V_NUMNAME,
+			N_AREA as N_AREA,
+			N_QYAREA as N_QYAREA,
+			V_AREANAME as V_AREANAME,
+			N_HOUSENUMBER as N_HOUSENUMBER,
+			N_XSAMOUNT as N_XSAMOUNT,
+			N_QYNUMBER as N_QYNUMBER,
+			N_QYAMOUNT as N_QYAMOUNT,
+			ETL_TIME as ETL_TIME,
+			N_HKAMOUNT as N_HKAMOUNT
+		from
+			YX_FACT_SALESDAY
+		where
+			V_AREANAME   = #{area}
+	union select
+			' 合计' as V_PROJNAME,
+			' 合计' as V_NUMNAME,
+			sum(N_AREA) as N_AREA,
+			sum(N_QYAREA) as N_QYAREA,
+			 ' 合计' as V_AREANAME,
+			sum(N_HOUSENUMBER) as N_HOUSENUMBER,
+			sum(N_XSAMOUNT) as N_XSAMOUNT,
+			sum(N_QYNUMBER) as N_QYNUMBER,
+			sum(N_QYAMOUNT) as N_QYAMOUNT,
+			ETL_TIME as ETL_TIME,
+			sum(N_HKAMOUNT) as N_HKAMOUNT
+		from
+			YX_FACT_SALESDAY
+		where
+			V_AREANAME   = #{area}
+			group by ETL_TIME
+			order by V_AREANAME desc
+	</select>
+
 </mapper>

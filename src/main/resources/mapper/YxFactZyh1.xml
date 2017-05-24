@@ -6,12 +6,374 @@
 		 SELECT * from YX_FACT_ZYH1
 	</select>
 	<select id="queryMainSum" resultType="YxFactZyh1">
-		    select
-			sum(N_ZNUM) N_ZNUM,
-			sum(N_ZAREA) N_ZAREA,
-			sum(N_ZMONEY) N_ZMONEY
-			FROM YX_FACT_ZYH1
+		select
+        TJTIME,
+        V_TYPE,
+        SUM(N_ZNUM) as N_ZNUM,
+        SUM(N_ZAREA) as N_ZAREA,
+        SUM(N_ZMONEY) as N_ZMONEY,
+        SUM(N_YCZNUM) as N_YCZNUM,
+        SUM(N_YCZAREA) as N_YCZAREA,
+        SUM(N_YCZMONEY) as N_YCZMONEY,
+        SUM(N_YTWSNUM) as N_YTWSNUM,
+        SUM(N_YTWSAREA) as N_YTWSAREA,
+        SUM(N_YTWSMONEY) as N_YTWSMONEY,
+        SUM(N_XKNUM) as N_XKNUM,
+        SUM(N_XKAREA) as N_XKAREA,
+        SUM(N_XKANUM) as N_XKANUM,
+        SUM(N_XKAAREA) as N_XKAAREA,
+        SUM(N_XKBNUM) as N_XKBNUM,
+        SUM(N_XKBAREA) as N_XKBAREA,
+        SUM(N_XKCNUM) as N_XKCNUM,
+        SUM(N_XKCAREA) as N_XKCAREA,
+        SUM(N_XKDNUM) as N_XKDNUM,
+        SUM(N_XKDAREA) as N_XKDAREA,
+        SUM(N_XKENUM) as N_XKENUM,
+        SUM(N_XKEAREA) as N_XKEAREA,
+        SUM(N_XKFNUM) as N_XKFNUM,
+        SUM(N_XKFAREA) as N_XKFAREA,
+        SUM(N_GHZCWNUM) as N_GHZCWNUM,
+        SUM(N_GHZCWAREA) as N_GHZCWAREA,
+        SUM(N_GHZCWMONEY) as N_GHZCWMONEY,
+        SUM(N_GHZSYKSNUM) as N_GHZSYKSNUM,
+        SUM(N_GHZSYKSAREA) as N_GHZSYKSAREA,
+        SUM(N_GHZSYKSMONEY) as N_GHZSYKSMONEY
+    from
+        MJ_DW.YX_FACT_ZYH1
+    group by
+        TJTIME,
+        V_TYPE
+union select
+        TJTIME,
+        ' 合计' as V_TYPE,
+        SUM(N_ZNUM) as N_ZNUM,
+        SUM(N_ZAREA) as N_ZAREA,
+        SUM(N_ZMONEY) as N_ZMONEY,
+        SUM(N_YCZNUM) as N_YCZNUM,
+        SUM(N_YCZAREA) as N_YCZAREA,
+        SUM(N_YCZMONEY) as N_YCZMONEY,
+        SUM(N_YTWSNUM) as N_YTWSNUM,
+        SUM(N_YTWSAREA) as N_YTWSAREA,
+        SUM(N_YTWSMONEY) as N_YTWSMONEY,
+        SUM(N_XKNUM) as N_XKNUM,
+        SUM(N_XKAREA) as N_XKAREA,
+        SUM(N_XKANUM) as N_XKANUM,
+        SUM(N_XKAAREA) as N_XKAAREA,
+        SUM(N_XKBNUM) as N_XKBNUM,
+        SUM(N_XKBAREA) as N_XKBAREA,
+        SUM(N_XKCNUM) as N_XKCNUM,
+        SUM(N_XKCAREA) as N_XKCAREA,
+        SUM(N_XKDNUM) as N_XKDNUM,
+        SUM(N_XKDAREA) as N_XKDAREA,
+        SUM(N_XKENUM) as N_XKENUM,
+        SUM(N_XKEAREA) as N_XKEAREA,
+        SUM(N_XKFNUM) as N_XKFNUM,
+        SUM(N_XKFAREA) as N_XKFAREA,
+        SUM(N_GHZCWNUM) as N_GHZCWNUM,
+        SUM(N_GHZCWAREA) as N_GHZCWAREA,
+        SUM(N_GHZCWMONEY) as N_GHZCWMONEY,
+        SUM(N_GHZSYKSNUM) as N_GHZSYKSNUM,
+        SUM(N_GHZSYKSAREA) as N_GHZSYKSAREA,
+        SUM(N_GHZSYKSMONEY) as N_GHZSYKSMONEY
+    from
+        MJ_DW.YX_FACT_ZYH1
+    group by
+        TJTIME
+        order by V_TYPE desc
+	</select>
+	<select id="queryByAreaType" resultType="YxFactZyh1">
+		select
+    TJTIME as TJTIME,
+    V_BUNAME as V_BUNAME,
+    V_TYPE as V_TYPE,
+    SUM(N_ZNUM) as N_ZNUM   ,
+    SUM(N_ZAREA) as N_ZAREA   ,
+    SUM(N_ZMONEY) as N_ZMONEY   ,
+    SUM(N_YCZNUM) as N_YCZNUM   ,
+    SUM(N_YCZAREA) as N_YCZAREA   ,
+    SUM(N_YCZMONEY) as N_YCZMONEY   ,
+    SUM(N_YTWSNUM) as N_YTWSNUM   ,
+    SUM(N_YTWSAREA) as N_YTWSAREA   ,
+    SUM(N_YTWSMONEY) as N_YTWSMONEY   ,
+    SUM(N_XKNUM) as N_XKNUM   ,
+    SUM(N_XKAREA) as N_XKAREA   ,
+    SUM(N_XKANUM) as N_XKANUM   ,
+    SUM(N_XKAAREA) as N_XKAAREA   ,
+    SUM(N_XKBNUM) as N_XKBNUM   ,
+    SUM(N_XKBAREA) as N_XKBAREA   ,
+    SUM(N_XKCNUM) as N_XKCNUM   ,
+    SUM(N_XKCAREA) as N_XKCAREA   ,
+    SUM(N_XKDNUM) as N_XKDNUM   ,
+    SUM(N_XKDAREA) as N_XKDAREA   ,
+    SUM(N_XKENUM) as N_XKENUM   ,
+    SUM(N_XKEAREA) as N_XKEAREA   ,
+    SUM(N_XKFNUM) as N_XKFNUM   ,
+    SUM(N_XKFAREA) as N_XKFAREA   ,
+    SUM(N_GHZCWNUM) as N_GHZCWNUM   ,
+    SUM(N_GHZCWAREA) as N_GHZCWAREA   ,
+    SUM(N_GHZCWMONEY) as N_GHZCWMONEY   ,
+    SUM(N_GHZSYKSNUM) as N_GHZSYKSNUM   ,
+    SUM(N_GHZSYKSAREA) as N_GHZSYKSAREA   ,
+    SUM(N_GHZSYKSMONEY) as N_GHZSYKSMONEY
+    from
+    YX_FACT_ZYH1
+    group by
+    TJTIME,
+    V_BUNAME,
+    V_TYPE
+ union   select
+        TJTIME as TJTIME,
+        '总合计' as V_BUNAME,
+        V_TYPE as V_TYPE,
+        SUM(N_ZNUM) as N_ZNUM   ,
+        SUM(N_ZAREA) as N_ZAREA   ,
+        SUM(N_ZMONEY) as N_ZMONEY   ,
+        SUM(N_YCZNUM) as N_YCZNUM   ,
+        SUM(N_YCZAREA) as N_YCZAREA   ,
+        SUM(N_YCZMONEY) as N_YCZMONEY   ,
+        SUM(N_YTWSNUM) as N_YTWSNUM   ,
+        SUM(N_YTWSAREA) as N_YTWSAREA   ,
+        SUM(N_YTWSMONEY) as N_YTWSMONEY   ,
+        SUM(N_XKNUM) as N_XKNUM   ,
+        SUM(N_XKAREA) as N_XKAREA   ,
+        SUM(N_XKANUM) as N_XKANUM   ,
+        SUM(N_XKAAREA) as N_XKAAREA   ,
+        SUM(N_XKBNUM) as N_XKBNUM   ,
+        SUM(N_XKBAREA) as N_XKBAREA   ,
+        SUM(N_XKCNUM) as N_XKCNUM   ,
+        SUM(N_XKCAREA) as N_XKCAREA   ,
+        SUM(N_XKDNUM) as N_XKDNUM   ,
+        SUM(N_XKDAREA) as N_XKDAREA   ,
+        SUM(N_XKENUM) as N_XKENUM   ,
+        SUM(N_XKEAREA) as N_XKEAREA   ,
+        SUM(N_XKFNUM) as N_XKFNUM   ,
+        SUM(N_XKFAREA) as N_XKFAREA   ,
+        SUM(N_GHZCWNUM) as N_GHZCWNUM   ,
+        SUM(N_GHZCWAREA) as N_GHZCWAREA   ,
+        SUM(N_GHZCWMONEY) as N_GHZCWMONEY   ,
+        SUM(N_GHZSYKSNUM) as N_GHZSYKSNUM   ,
+        SUM(N_GHZSYKSAREA) as N_GHZSYKSAREA   ,
+        SUM(N_GHZSYKSMONEY) as N_GHZSYKSMONEY
+  from
+        YX_FACT_ZYH1
+    group by
+        TJTIME,
+        V_TYPE
+    order by V_BUNAME
+	</select>
+
+	<select id="queryAreas" resultType="String">
+		select V_buname from YX_FACT_ZYH1 group by V_buname
 	</select>
 	
+	<select id="queryAreaSum" resultType="YxFactZyh1">
+
+    select
+        TJTIME,
+        V_BUNAME,
+        V_TYPE,
+        SUM(N_ZNUM) as N_ZNUM,
+        SUM(N_ZAREA) as N_ZAREA,
+        SUM(N_ZMONEY) as N_ZMONEY,
+        SUM(N_YCZNUM) as N_YCZNUM,
+        SUM(N_YCZAREA) as N_YCZAREA,
+        SUM(N_YCZMONEY) as N_YCZMONEY,
+        SUM(N_YTWSNUM) as N_YTWSNUM,
+        SUM(N_YTWSAREA) as N_YTWSAREA,
+        SUM(N_YTWSMONEY) as N_YTWSMONEY,
+        SUM(N_XKNUM) as N_XKNUM,
+        SUM(N_XKAREA) as N_XKAREA,
+        SUM(N_XKANUM) as N_XKANUM,
+        SUM(N_XKAAREA) as N_XKAAREA,
+        SUM(N_XKBNUM) as N_XKBNUM,
+        SUM(N_XKBAREA) as N_XKBAREA,
+        SUM(N_XKCNUM) as N_XKCNUM,
+        SUM(N_XKCAREA) as N_XKCAREA,
+        SUM(N_XKDNUM) as N_XKDNUM,
+        SUM(N_XKDAREA) as N_XKDAREA,
+        SUM(N_XKENUM) as N_XKENUM,
+        SUM(N_XKEAREA) as N_XKEAREA,
+        SUM(N_XKFNUM) as N_XKFNUM,
+        SUM(N_XKFAREA) as N_XKFAREA,
+        SUM(N_GHZCWNUM) as N_GHZCWNUM,
+        SUM(N_GHZCWAREA) as N_GHZCWAREA,
+        SUM(N_GHZCWMONEY) as N_GHZCWMONEY,
+        SUM(N_GHZSYKSNUM) as N_GHZSYKSNUM,
+        SUM(N_GHZSYKSAREA) as N_GHZSYKSAREA,
+        SUM(N_GHZSYKSMONEY) as N_GHZSYKSMONEY
+    from
+        YX_FACT_ZYH1
+        <if test="type!=null and type!=''">
+            where V_TYPE like #{type}
+        </if>
+
+    group by
+        V_BUNAME,
+        TJTIME,
+        V_TYPE
+
+        union
+    select
+        TJTIME,
+        ' 合计' as V_BUNAME ,
+        ' 合计' as V_TYPE,
+        SUM(N_ZNUM) as N_ZNUM,
+        SUM(N_ZAREA) as N_ZAREA,
+        SUM(N_ZMONEY) as N_ZMONEY,
+        SUM(N_YCZNUM) as N_YCZNUM,
+        SUM(N_YCZAREA) as N_YCZAREA,
+        SUM(N_YCZMONEY) as N_YCZMONEY,
+        SUM(N_YTWSNUM) as N_YTWSNUM,
+        SUM(N_YTWSAREA) as N_YTWSAREA,
+        SUM(N_YTWSMONEY) as N_YTWSMONEY,
+        SUM(N_XKNUM) as N_XKNUM,
+        SUM(N_XKAREA) as N_XKAREA,
+        SUM(N_XKANUM) as N_XKANUM,
+        SUM(N_XKAAREA) as N_XKAAREA,
+        SUM(N_XKBNUM) as N_XKBNUM,
+        SUM(N_XKBAREA) as N_XKBAREA,
+        SUM(N_XKCNUM) as N_XKCNUM,
+        SUM(N_XKCAREA) as N_XKCAREA,
+        SUM(N_XKDNUM) as N_XKDNUM,
+        SUM(N_XKDAREA) as N_XKDAREA,
+        SUM(N_XKENUM) as N_XKENUM,
+        SUM(N_XKEAREA) as N_XKEAREA,
+        SUM(N_XKFNUM) as N_XKFNUM,
+        SUM(N_XKFAREA) as N_XKFAREA,
+        SUM(N_GHZCWNUM) as N_GHZCWNUM,
+        SUM(N_GHZCWAREA) as N_GHZCWAREA,
+        SUM(N_GHZCWMONEY) as N_GHZCWMONEY,
+        SUM(N_GHZSYKSNUM) as N_GHZSYKSNUM,
+        SUM(N_GHZSYKSAREA) as N_GHZSYKSAREA,
+        SUM(N_GHZSYKSMONEY) as N_GHZSYKSMONEY
+    from
+        YX_FACT_ZYH1
+        <if test="type!=null and type!=''">
+            where V_TYPE like #{type}
+        </if>
+         group by TJTIME
+order by V_BUNAME DESC
+
+	</select>
+    <select id="queryProjectbyArea" resultType="YxFactZyh1">
+
+    select
+        TJTIME as TJTIME,
+        V_BUNAME as V_BUNAME,
+        V_PROJECTNAME as V_PROJECTNAME,
+        V_TYPE as V_TYPE,
+        N_YCZNUM as N_YCZNUM,
+        N_YCZAREA as N_YCZAREA,
+        N_YCZMONEY as N_YCZMONEY,
+        N_YTWSNUM as N_YTWSNUM,
+        N_YTWSAREA as N_YTWSAREA,
+        N_YTWSMONEY as N_YTWSMONEY,
+        N_XKNUM as N_XKNUM,
+        N_XKAREA as N_XKAREA
+    from
+        YX_FACT_ZYH1
+    where
+          V_BUNAME=  #{area}
+          and V_TYPE like #{type}
+union select
+        TJTIME as TJTIME,
+        ' 合计' as V_BUNAME,
+        ' 合计' as V_PROJECTNAME,
+        ' 合计' as V_TYPE,
+        sum(N_YCZNUM) as N_YCZNUM,
+        sum(N_YCZAREA) as N_YCZAREA,
+        sum(N_YCZMONEY) as N_YCZMONEY,
+        sum(N_YTWSNUM) as N_YTWSNUM,
+        sum(N_YTWSAREA) as N_YTWSAREA,
+        sum(N_YTWSMONEY) as N_YTWSMONEY,
+        sum(N_XKNUM) as N_XKNUM,
+        sum(N_XKAREA) as N_XKAREA
+        from
+        YX_FACT_ZYH1
+    where
+          V_BUNAME=  #{area}
+          and V_TYPE like #{type}
+          group by TJTIME
+          order by V_PROJECTNAME desc
+    </select>
+
+    <select id="queryZyhByArea" resultType="YxFactZyh1">
+    select
+        TJTIME as TJTIME,
+        V_BUNAME as V_BUNAME,
+        V_PROJECTNAME as V_PROJECTNAME,
+        V_TYPE as V_TYPE,
+        N_ZNUM as N_ZNUM,
+        N_ZAREA as N_ZAREA,
+        N_ZMONEY as N_ZMONEY,
+        N_YCZNUM as N_YCZNUM,
+        N_YCZAREA as N_YCZAREA,
+        N_YCZMONEY as N_YCZMONEY,
+        N_YTWSNUM as N_YTWSNUM,
+        N_YTWSAREA as N_YTWSAREA,
+        N_YTWSMONEY as N_YTWSMONEY,
+        N_XKNUM as N_XKNUM,
+        N_XKAREA as N_XKAREA,
+        N_XKANUM as N_XKANUM,
+        N_XKAAREA as N_XKAAREA,
+        N_XKBNUM as N_XKBNUM,
+        N_XKBAREA as N_XKBAREA,
+        N_XKCNUM as N_XKCNUM,
+        N_XKCAREA as N_XKCAREA,
+        N_XKDNUM as N_XKDNUM,
+        N_XKDAREA as N_XKDAREA,
+        N_XKENUM as N_XKENUM,
+        N_XKEAREA as N_XKEAREA,
+        N_XKFNUM as N_XKFNUM,
+        N_XKFAREA as N_XKFAREA,
+        N_GHZCWNUM as N_GHZCWNUM,
+        N_GHZCWAREA as N_GHZCWAREA,
+        N_GHZCWMONEY as N_GHZCWMONEY,
+        N_GHZSYKSNUM as N_GHZSYKSNUM,
+        N_GHZSYKSAREA as N_GHZSYKSAREA,
+        N_GHZSYKSMONEY as N_GHZSYKSMONEY
+    from
+        YX_FACT_ZYH1
+        where V_BUNAME LIKE #{area}
+        union select
+        TJTIME as TJTIME,
+        ' 片区总合计' as V_BUNAME,
+         ' 片区总合计' as V_PROJECTNAME,
+        V_TYPE as V_TYPE,
+        sum(N_ZNUM) as N_ZNUM,
+        sum(N_ZAREA) as N_ZAREA,
+        sum(N_ZMONEY) as N_ZMONEY,
+        sum(N_YCZNUM) as N_YCZNUM,
+        sum(N_YCZAREA) as N_YCZAREA,
+        sum(N_YCZMONEY) as N_YCZMONEY,
+        sum(N_YTWSNUM) as N_YTWSNUM,
+        sum(N_YTWSAREA) as N_YTWSAREA,
+        sum(N_YTWSMONEY) as N_YTWSMONEY,
+        sum(N_XKNUM) as N_XKNUM,
+        sum(N_XKAREA) as N_XKAREA,
+        sum(N_XKANUM) as N_XKANUM,
+        sum(N_XKAAREA) as N_XKAAREA,
+        sum(N_XKBNUM) as N_XKBNUM,
+        sum(N_XKBAREA) as N_XKBAREA,
+        sum(N_XKCNUM) as N_XKCNUM,
+        sum(N_XKCAREA) as N_XKCAREA,
+        sum(N_XKDNUM) as N_XKDNUM,
+        sum(N_XKDAREA) as N_XKDAREA,
+        sum(N_XKENUM) as N_XKENUM,
+        sum(N_XKEAREA) as N_XKEAREA,
+        sum(N_XKFNUM) as N_XKFNUM,
+        sum(N_XKFAREA) as N_XKFAREA,
+        sum(N_GHZCWNUM) as N_GHZCWNUM,
+        sum(N_GHZCWAREA) as N_GHZCWAREA,
+        sum(N_GHZCWMONEY) as N_GHZCWMONEY,
+        sum(N_GHZSYKSNUM) as N_GHZSYKSNUM,
+        sum(N_GHZSYKSAREA) as N_GHZSYKSAREA,
+        sum(N_GHZSYKSMONEY) as N_GHZSYKSMONEY
+        from
+        YX_FACT_ZYH1
+        where V_BUNAME LIKE #{area}
+        group by TJTIME,V_TYPE
+        order by v_buname desc
+    </select>
 
 </mapper>

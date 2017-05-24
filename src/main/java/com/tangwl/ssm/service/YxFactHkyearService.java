@@ -8,6 +8,7 @@ public interface YxFactHkyearService {
 
 	List<YxFactHkyear> getAllList();
 	List<YxFactHkyear> getQuerySumByYear(String yy);
+	List<YxFactHkyear> getProjectByArea(String area);
 
 
 }

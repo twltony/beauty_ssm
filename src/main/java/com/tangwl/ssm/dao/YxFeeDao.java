@@ -1,6 +1,7 @@
 package com.tangwl.ssm.dao;
 
 import com.tangwl.ssm.entity.YxFee;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -18,13 +19,17 @@ public interface YxFeeDao {
      * @param mm
      * @return
      */
-    List<YxFee> querySumByMonth(String mm);
+    List<YxFee> querySumByMonth(@Param("month") String mm);
 
     /**
      * 营销首页汇总
      * @return
      */
-    List<YxFee> queryLatestSum();
+    List<YxFee> queryMonthSum(@Param("month") String mm);
+
+    List<YxFee> queryListByMonth(@Param("month") String mm);
+
+    List<YxFee> queryAllMonthSum();
 
 
 	

@@ -23,19 +23,61 @@ public class YxFactSalesplanImpl implements YxFactSalesplanService {
 	
 	@Override
 	public List<YxFactSalesplan> getAllList() {
-		System.out.println(1);
-		return 	yxFactSalesplanDao.queryAll();
+		String cache_key=RedisCache.CAHCENAME+"|YxFactSalesplan|"+"|getAllList|";
+		//先去缓存中取
+		List<YxFactSalesplan> result_cache=cache.getListCache(cache_key, YxFactSalesplan.class);
+		if(result_cache==null) {
+			result_cache=yxFactSalesplanDao.queryAll();
+			cache.putListCacheWithExpireTime(cache_key, result_cache, RedisCache.CAHCETIME);
+			LOG.info("put cache with key:"+cache_key);
+		}else{
+			LOG.info("get cache with key:"+cache_key);
+		}
+		return result_cache;
 	}
 
 	@Override
 	public List<YxFactSalesplan> getAllSum(){
-
-		return yxFactSalesplanDao.queryAllSum();
+		String cache_key=RedisCache.CAHCENAME+"|YxFactSalesplan|"+"|getAllSum|";
+		//先去缓存中取
+		List<YxFactSalesplan> result_cache=cache.getListCache(cache_key, YxFactSalesplan.class);
+		if(result_cache==null) {
+			result_cache=yxFactSalesplanDao.queryAllSum();
+			cache.putListCacheWithExpireTime(cache_key, result_cache, RedisCache.CAHCETIME);
+			LOG.info("put cache with key:"+cache_key);
+		}else{
+			LOG.info("get cache with key:"+cache_key);
+		}
+		return result_cache;
 	}
 	@Override
 	public List<YxFactSalesplan> getYearAll(){
+		String cache_key=RedisCache.CAHCENAME+"|YxFactSalesplan|"+"|getYearAll|";
+		//先去缓存中取
+		List<YxFactSalesplan> result_cache=cache.getListCache(cache_key, YxFactSalesplan.class);
+		if(result_cache==null) {
+			result_cache=yxFactSalesplanDao.queryYearAll();
+			cache.putListCacheWithExpireTime(cache_key, result_cache, RedisCache.CAHCETIME);
+			LOG.info("put cache with key:"+cache_key);
+		}else{
+			LOG.info("get cache with key:"+cache_key);
+		}
+		return result_cache;
+	}
 
-		return yxFactSalesplanDao.queryYearAll();
+	@Override
+	public List<YxFactSalesplan> getYearByArea(String area){
+		String cache_key=RedisCache.CAHCENAME+"|YxFactSalesplan|"+"|getYearByArea|"+area;
+		//先去缓存中取
+		List<YxFactSalesplan> result_cache=cache.getListCache(cache_key, YxFactSalesplan.class);
+		if(result_cache==null) {
+			result_cache=yxFactSalesplanDao.queryYearByArea(area);
+			cache.putListCacheWithExpireTime(cache_key, result_cache, RedisCache.CAHCETIME);
+			LOG.info("put cache with key:"+cache_key);
+		}else{
+			LOG.info("get cache with key:"+cache_key);
+		}
+		return result_cache;
 	}
 
 

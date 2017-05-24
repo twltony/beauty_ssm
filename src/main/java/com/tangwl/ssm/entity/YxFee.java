@@ -12,8 +12,44 @@ public class YxFee {
     private String mm;
     private Date yyyyMm;
     private Double paylocal;
+    private Double FCPAYLOCAL;
+    private Double WYPAYLOCAL;
+    private Double DSPAYLOCAL;
+    private Double QTPAYLOCAL;
     private String unitname;
 
+
+    public Double getFCPAYLOCAL() {
+        return FCPAYLOCAL;
+    }
+
+    public void setFCPAYLOCAL(Double FCPAYLOCAL) {
+        this.FCPAYLOCAL = FCPAYLOCAL;
+    }
+
+    public Double getWYPAYLOCAL() {
+        return WYPAYLOCAL;
+    }
+
+    public void setWYPAYLOCAL(Double WYPAYLOCAL) {
+        this.WYPAYLOCAL = WYPAYLOCAL;
+    }
+
+    public Double getDSPAYLOCAL() {
+        return DSPAYLOCAL;
+    }
+
+    public void setDSPAYLOCAL(Double DSPAYLOCAL) {
+        this.DSPAYLOCAL = DSPAYLOCAL;
+    }
+
+    public Double getQTPAYLOCAL() {
+        return QTPAYLOCAL;
+    }
+
+    public void setQTPAYLOCAL(Double QTPAYLOCAL) {
+        this.QTPAYLOCAL = QTPAYLOCAL;
+    }
 
     public String getCostcode() {
         return costcode;

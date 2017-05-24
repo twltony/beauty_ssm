@@ -54,4 +54,60 @@
 		order by V_BUNAME desc
 	</select>
 
+	<select id="queryProjectByArea" resultType="YxFactHkyear">
+
+    select
+        V_BUNAME as V_BUNAME,
+        V_NUMNAME as V_NUMNAME,
+        V_PROJNAME as V_PROJNAME,
+        N_NUM as N_NUM,
+        N_AREA as N_AREA,
+        N_MONEY as N_MONEY,
+        N_QYNUM as N_QYNUM,
+        N_QYAREA as N_QYAREA,
+        N_QYMONEY as N_QYMONEY,
+        N_HKNUM as N_HKNUM,
+        N_FKMONEY as N_FKMONEY,
+        N_HKMONEY as N_HKMONEY,
+        N_WQYNUM as N_WQYNUM,
+        N_WQYWHKMNY as N_WQYWHKMNY,
+        N_YQYNUM as N_YQYNUM,
+        N_YQYWHKMNY as N_YQYWHKMNY,
+        N_WHKNUM as N_WHKNUM,
+        N_WHKMONEY as N_WHKMONEY,
+        N_MHKMONEY as N_MHKMONEY,
+        D_ETLTIME as D_ETLTIME
+    from
+        YX_FACT_HKYEAR
+    where
+        V_BUNAME = #{area}
+union select
+        ' 合计' as V_BUNAME,
+        ' 合计' as V_NUMNAME,
+        ' 合计' as V_PROJNAME,
+        sum(N_NUM) as N_NUM,
+        sum(N_AREA) as N_AREA,
+        sum(N_MONEY) as N_MONEY,
+        sum(N_QYNUM) as N_QYNUM,
+        sum(N_QYAREA) as N_QYAREA,
+        sum(N_QYMONEY) as N_QYMONEY,
+        sum(N_HKNUM) as N_HKNUM,
+        sum(N_FKMONEY) as N_FKMONEY,
+        sum(N_HKMONEY) as N_HKMONEY,
+        sum(N_WQYNUM) as N_WQYNUM,
+        sum(N_WQYWHKMNY) as N_WQYWHKMNY,
+        sum(N_YQYNUM) as N_YQYNUM,
+        sum(N_YQYWHKMNY) as N_YQYWHKMNY,
+        sum(N_WHKNUM) as N_WHKNUM,
+        sum(N_WHKMONEY) as N_WHKMONEY,
+        sum(N_MHKMONEY) as N_MHKMONEY,
+        D_ETLTIME as D_ETLTIME
+    from
+        YX_FACT_HKYEAR
+    where
+        V_BUNAME = #{area}
+        group by D_ETLTIME
+        order by V_BUNAME  desc
+	</select>
+
 </mapper>

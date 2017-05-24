@@ -1,6 +1,7 @@
 package com.tangwl.ssm.dao;
 
 import com.tangwl.ssm.entity.YxFactSalesplan;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -15,6 +16,7 @@ public interface YxFactSalesplanDao {
 
     List<YxFactSalesplan> queryAllSum();
     List<YxFactSalesplan> queryYearAll();
+    List<YxFactSalesplan> queryYearByArea(@Param("area") String area);
 
     List<YxFactSalesplan> querySalesRate();
 

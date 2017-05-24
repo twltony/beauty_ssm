@@ -8,6 +8,10 @@ public interface YxFeeService {
 
 	List<YxFee> getAllList();
 	List<YxFee> getQuerySumByMonth(String mm);
+	List<YxFee> getListByMonth(String mm);
 
+	List<YxFee> getMonthSum(String mm);
+
+	List<YxFee> getAllMonthSum();
 
 }

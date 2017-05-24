@@ -9,15 +9,15 @@ import java.util.Date;
  *
  */
 public class User {
-	
+
 	private long userId;
-	
+
 	private String userName;
-	
+
 	private long userPhone;
-	
+
 	private Date createTime;
-	
+
 	private int score;
 
 	public long getUserId() {
@@ -67,6 +67,6 @@ public class User {
 				+ "]";
 	}
 
-	
+
 
 }

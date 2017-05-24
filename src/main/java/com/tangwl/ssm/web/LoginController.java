@@ -1,9 +1,12 @@
 package com.tangwl.ssm.web;
 
+import com.tangwl.ssm.entity.ZzRole;
+import com.tangwl.ssm.service.ZzRoleService;
 import com.tangwl.ssm.util.LDAPConnector;
 import org.apache.commons.collections.map.HashedMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -17,7 +20,8 @@ import java.util.Map;
 public class LoginController {
 
 	private final Logger LOG = LoggerFactory.getLogger(this.getClass());
-
+	@Autowired
+	private ZzRoleService zzRoleService;
 
 	@ResponseBody
 	@RequestMapping(value = "/loginauth")
@@ -27,8 +31,6 @@ public class LoginController {
 
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
-
-		System.out.println(username+"pwd"+password);
 
 		Map<String,Object> resultMap = new HashedMap();
 		boolean isLdapVaild = new LDAPConnector().Authenricate(username,password);
@@ -42,5 +44,18 @@ public class LoginController {
 
 		return resultMap;
 	}
+//	public int test(){
+//		ZzRole zzRole = new ZzRole();
+//		zzRole.setDescription("测试");
+//		zzRole.setrId("99");
+//		zzRole.setRouleName("测试");
+//		int i = zzRoleService.insert(zzRole);
+//		return i;
+//	}
+//
+//	public static void main(String[] args) {
+//
+//		System.out.println(i);
+//	}
 
 }

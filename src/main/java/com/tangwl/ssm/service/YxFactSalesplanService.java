@@ -9,6 +9,7 @@ public interface YxFactSalesplanService {
 	List<YxFactSalesplan> getAllList();
 	List<YxFactSalesplan> getAllSum();
 	List<YxFactSalesplan> getYearAll();
+	List<YxFactSalesplan> getYearByArea(String area);
 
 
 }

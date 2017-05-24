@@ -14,27 +14,175 @@
     from
         yx_fee
     where
-        mm like #{month}
+        mm || '月' like #{month}
         group by YYYY,MM
 	</select>
-	<select id="queryLatestSum" resultType="YxFee">
-		select
-        *
-		from
-			( select
-				YYYY,
-				MM,
-				sum(PAYLOCAL) paylocal
-			from
-				yx_fee
-			group by
-				yyyy,
-				mm
-			order by
-				yyyy DESC,
-				mm DESC )
-		where
-			rownum=1
+	<select id="queryMonthSum" resultType="YxFee">
+		select sum(FCPAYLOCAL) FCPAYLOCAL from(
+    select
+        costcode,
+        FCOST,
+        COSTNAME,
+        YYYY,
+        MM,
+        sum(FCPAYLOCAL)FCPAYLOCAL,
+        sum(WYPAYLOCAL)WYPAYLOCAL,
+        sum(DSPAYLOCAL)DSPAYLOCAL,
+        sum(QTPAYLOCAL)QTPAYLOCAL
+    from
+        (     select
+            costcode,
+            substr(costcode,
+            0,
+            length(costcode)-2) fcost,
+            COSTNAME,
+            YYYY,
+            MM,
+            (case
+                when unitname='房产' then sum(PAYLOCAL)
+                else 0
+            end) FCPAYLOCAL,
+            (case
+                when unitname='物业' then sum(PAYLOCAL)
+                else 0
+            end) WYPAYLOCAL,
+            (case
+                when unitname='第三产业' then sum(PAYLOCAL)
+                else 0
+            end) DSPAYLOCAL,
+            (case
+                when unitname is null then sum(PAYLOCAL)
+                else 0
+            end) QTPAYLOCAL
+        from
+            yx_fee
+  where
+            mm || '月' like #{month}
+        group by
+            costcode,
+            substr(costcode,
+            0,
+            length(costcode)-2),
+            COSTNAME,
+            YYYY,
+            MM,
+            UNITNAME )
+    group by
+        costcode,
+        FCOST,
+        COSTNAME,
+        YYYY,
+        MM
+    order by
+        costcode DESC)
 	</select>
+
+	<select id="queryListByMonth" resultType="YxFee">
+		select
+        costcode,
+        FCOST,
+        COSTNAME,
+        YYYY,
+        MM,
+        sum(FCPAYLOCAL)FCPAYLOCAL,
+        sum(WYPAYLOCAL)WYPAYLOCAL,
+        sum(DSPAYLOCAL)DSPAYLOCAL,
+        sum(QTPAYLOCAL)QTPAYLOCAL
+    from
+        (     select
+            costcode,
+            substr(costcode,
+            0,
+            length(costcode)-2) fcost,
+            COSTNAME,
+            YYYY,
+            MM,
+            (case
+                when unitname='房产' then sum(PAYLOCAL)
+                else 0
+            end) FCPAYLOCAL,
+            (case
+                when unitname='物业' then sum(PAYLOCAL)
+                else 0
+            end) WYPAYLOCAL,
+            (case
+                when unitname='第三产业' then sum(PAYLOCAL)
+                else 0
+            end) DSPAYLOCAL,
+            (case
+                when unitname is null then sum(PAYLOCAL)
+                else 0
+            end) QTPAYLOCAL
+        from
+            yx_fee
+        where
+            mm || '月' like  #{month}
+        group by
+            costcode,
+            substr(costcode,
+            0,
+            length(costcode)-2),
+            COSTNAME,
+            YYYY,
+            MM,
+            UNITNAME )
+    group by
+        costcode,
+        FCOST,
+        COSTNAME,
+        YYYY,
+        MM
+    order by
+        costcode DESC
+	</select>
+
+    <select id="queryAllMonthSum" resultType="YxFee">
+        select
+        YYYY,
+        MM,
+        sum(FCPAYLOCAL)/10000 FCPAYLOCAL
+    from
+        (     select
+            costcode,
+            substr(costcode,
+            0,
+            length(costcode)-2) fcost,
+            COSTNAME,
+            YYYY,
+            MM,
+            (case
+                when unitname='房产' then sum(PAYLOCAL)
+                else 0
+            end) FCPAYLOCAL,
+            (case
+                when unitname='物业' then sum(PAYLOCAL)
+                else 0
+            end) WYPAYLOCAL,
+            (case
+                when unitname='第三产业' then sum(PAYLOCAL)
+                else 0
+            end) DSPAYLOCAL,
+            (case
+                when unitname is null then sum(PAYLOCAL)
+                else 0
+            end) QTPAYLOCAL
+        from
+            yx_fee
+        where
+            mm || '月' like '%'
+        group by
+            costcode,
+            substr(costcode,
+            0,
+            length(costcode)-2),
+            COSTNAME,
+            YYYY,
+            MM,
+            UNITNAME )
+    group by
+        YYYY,
+        MM
+        order by mm
+    </select>
 
 </mapper>

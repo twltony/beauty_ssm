@@ -23,14 +23,46 @@ public class YxFactSalesdayImpl implements YxFactSalesdayService {
 	
 	@Override
 	public List<YxFactSalesday> getAllList() {
-		System.out.println(1);
-		return 	YxFactSalesdayDao.queryAll();
+		String cache_key=RedisCache.CAHCENAME+"|YxFactSalesday|"+"|getAllList|";
+		//先去缓存中取
+		List<YxFactSalesday> result_cache=cache.getListCache(cache_key, YxFactSalesday.class);
+		if(result_cache==null) {
+			result_cache=YxFactSalesdayDao.queryAll();
+			cache.putListCacheWithExpireTime(cache_key, result_cache, RedisCache.CAHCETIME);
+			LOG.info("put cache with key:"+cache_key);
+		}else{
+			LOG.info("get cache with key:"+cache_key);
+		}
+		return result_cache;
 	}
 
 	@Override
 	public List<YxFactSalesday> getAllSum(){
-
-		return YxFactSalesdayDao.queryAllSum();
+		String cache_key=RedisCache.CAHCENAME+"|YxFactSalesday|"+"|getAllSum|";
+		//先去缓存中取
+		List<YxFactSalesday> result_cache=cache.getListCache(cache_key, YxFactSalesday.class);
+		if(result_cache==null) {
+			result_cache=YxFactSalesdayDao.queryAllSum();
+			cache.putListCacheWithExpireTime(cache_key, result_cache, RedisCache.CAHCETIME);
+			LOG.info("put cache with key:"+cache_key);
+		}else{
+			LOG.info("get cache with key:"+cache_key);
+		}
+		return result_cache;
+	}
+	@Override
+	public List<YxFactSalesday> getProjectbyArea(String area){
+		String cache_key=RedisCache.CAHCENAME+"|YxFactSalesday|"+"|getProjectbyArea|"+area;
+		//先去缓存中取
+		List<YxFactSalesday> result_cache=cache.getListCache(cache_key, YxFactSalesday.class);
+		if(result_cache==null) {
+			result_cache=YxFactSalesdayDao.queryProjectbyArea(area);
+			cache.putListCacheWithExpireTime(cache_key, result_cache, RedisCache.CAHCETIME);
+			LOG.info("put cache with key:"+cache_key);
+		}else{
+			LOG.info("get cache with key:"+cache_key);
+		}
+		return result_cache;
 	}
 	
 	

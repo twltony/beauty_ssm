@@ -19,6 +19,10 @@ public interface YxFactMsalesplanDao {
 
     List<YxFactMsalesplan> querySalesRate(String year,String month);
 
+    List<YxFactMsalesplan> queryAreaMonthSales(@Param("year") String year, @Param("month") String month);
+
+    List<YxFactMsalesplan> queryProjectbyAreaMonth(@Param("area") String area, @Param("month") String month);
+
 
 	
 }
