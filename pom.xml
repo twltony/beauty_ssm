@@ -222,10 +222,11 @@
 			<version>1.0.8</version>
 		</dependency>
 
+		<!--cmd 运行：mvn install:install-file -Dfile=C:\app\Administrator\product\11.2.0\client_1\ojdbc6.jar -DgroupId=com.oracle -DartifactId=ojdbc6 -Dversion=11.2.0.3 -Dpackaging=jar -DgeneratePom=true-->
 		<dependency>
 			<groupId>com.oracle</groupId>
 			<artifactId>ojdbc6</artifactId>
-			<version>11.2.0.2.0</version>
+			<version>11.2.0.1.0</version>
 		</dependency>
 
 		<dependency>

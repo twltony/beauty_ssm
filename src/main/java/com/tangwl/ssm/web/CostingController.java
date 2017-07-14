@@ -1,10 +1,8 @@
 package com.tangwl.ssm.web;
 
-import com.alibaba.fastjson.JSON;
 import com.tangwl.ssm.entity.*;
 import com.tangwl.ssm.service.*;
 import com.tangwl.ssm.util.MultipleTree;
-import org.apache.commons.collections.map.HashedMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -30,7 +29,7 @@ public class CostingController {
 	private CbFactYfkService cbFactYfkService;
 
 	@ResponseBody
-	@RequestMapping(value = "/getVnames", method = RequestMethod.GET)
+	@RequestMapping(value = "/getVnames", method = { RequestMethod.POST})
 	public List<String> getVnames(HttpServletResponse response,HttpServletRequest request){
 		response.setHeader("Access-Control-Allow-Origin","*");
 		String unitname = request.getParameter("unitName");
@@ -91,13 +90,17 @@ public class CostingController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/getDtcb", method = RequestMethod.GET)
-	public List<CbFactProjectDt> getDtcb(HttpServletResponse response, HttpServletRequest request){
+	public String getDtcb(HttpServletResponse response, HttpServletRequest request){
 		response.setHeader("Access-Control-Allow-Origin","*");
 		response.setHeader("Content-Type","application/json;charset=UTF-8");
 		String vname = request.getParameter("vname");
 		List<CbFactProjectDt> list =cbFactProjectDtService.getDtcbByVname(vname);
 
-		return list;
+		MultipleTree mtree = new MultipleTree();
+
+		String str =  mtree.generateTree(list);
+
+		return str;
 	}
 	/**
 	 *

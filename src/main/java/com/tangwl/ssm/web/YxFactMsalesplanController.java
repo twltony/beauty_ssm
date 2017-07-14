@@ -1,9 +1,9 @@
 package com.tangwl.ssm.web;
 
-import com.sun.jdi.DoubleValue;
-import com.sun.jdi.IntegerType;
+
 import com.tangwl.ssm.entity.*;
 import com.tangwl.ssm.service.*;
+import com.tangwl.ssm.util.AccessUtils;
 import org.apache.commons.collections.map.HashedMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.math.RoundingMode;
+import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -43,15 +44,72 @@ public class YxFactMsalesplanController {
 	private YxFactRoomstatusService yxFactRoomstatusService;
 	@Autowired
 	private YxFactSalesmonthService yxFactSalesmonthService;
+	@Autowired
+	private ZzAccessService zzAccessService;
 
 
 	private String dataMonth;
 	private String dataYear;
 
+
+	public int setAccessStatus(String username,String imei,String oldDate) throws Exception{
+
+		DateFormat format= new SimpleDateFormat();
+		Date dt = null;
+		try{
+			String res;
+			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			long lt = new Long(oldDate);
+			dt = new Date(lt);
+			//dt = format.parse(oldDate);
+		}catch (Exception pe){
+			pe.printStackTrace();
+		}
+
+		ZzAccess za =  new ZzAccess();
+		UUID uuid = UUID.randomUUID();
+		String id = uuid.toString().split("-")[0];
+		za.setId(id);
+		za.setUsername(username);
+		za.setImei(imei);
+		za.setAccesstime1(new Date());
+		za.setAccesstime2(dt);
+		za.setDevicename("device");
+		return zzAccessService.insert(za);
+	}
+
 	@ResponseBody
 	@RequestMapping(value = "/getAllSalesplan", method = RequestMethod.GET)
-	public Map<String, Object> getAllSalesplan() {
+	public Map<String, Object> getAllSalesplan(HttpServletRequest request) {
 		LOG.info("invoke----------/user/list");
+		String time = request.getParameter("time");
+		String username = request.getParameter("username");
+//		try{
+//			DateFormat format= new SimpleDateFormat();
+//			Date dt = null;
+//			try{
+//				String res;
+//				SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//				long lt = new Long(time);
+//				dt = new Date(lt);
+//				//dt = format.parse(oldDate);
+//			}catch (Exception pe){
+//				pe.printStackTrace();
+//			}
+//
+//			ZzAccess za =  new ZzAccess();
+//			UUID uuid = UUID.randomUUID();
+//			String id = uuid.toString().split("-")[0];
+//			za.setId(id);
+//			za.setUsername(username);
+//			za.setImei("0000");
+//			za.setAccesstime1(new Date());
+//			za.setAccesstime2(dt);
+//			za.setDevicename("device");
+//			int i = zzAccessService.insert(za);
+//		}catch (Exception e){
+//			e.printStackTrace();
+//		}
 		Map<String ,Object> map = new HashMap<>();
 		List<YxFactMsalesplan> list = yxFactMsalesplanService.getAllList();
 		map.put("status","success");
@@ -62,9 +120,45 @@ public class YxFactMsalesplanController {
 
 	@ResponseBody
 	@RequestMapping(value = "/getMonthSalesplanByYear", method = RequestMethod.GET)
-	public Map<String, Object> list(HttpServletResponse response) {
+	public Map<String, Object> list(HttpServletResponse response,HttpServletRequest request) {
 		response.setHeader("Access-Control-Allow-Origin","*");
 		LOG.info("invoke----------/user/list");
+		String time = request.getParameter("time");
+		String username = request.getParameter("username");
+
+//		try{
+//			DateFormat format= new SimpleDateFormat();
+//			Date dt = null;
+//			try{
+//				String res;
+//				SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//				long lt = new Long(time);
+//				dt = new Date(lt);
+//				//dt = format.parse(oldDate);
+//			}catch (Exception pe){
+//				pe.printStackTrace();
+//			}
+//
+//			ZzAccess za =  new ZzAccess();
+//			UUID uuid = UUID.randomUUID();
+//			String id = uuid.toString().split("-")[0];
+//			za.setId(id);
+//			za.setUsername(username);
+//			za.setImei("0000");
+//			za.setAccesstime1(new Date());
+//			za.setAccesstime2(dt);
+//			za.setDevicename("device");
+//			int i = zzAccessService.insert(za);
+//		}catch (Exception e){
+//			e.printStackTrace();
+//		}
+
+		try{
+			setAccessStatus(username,"0000",time);
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+
 		Map<String ,Object> map = new HashMap<>();
 
 		//数据年份/月份

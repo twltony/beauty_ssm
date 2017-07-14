@@ -34,7 +34,7 @@
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 
-        <table tableName="CB_FACT_YFK" domainObjectName="CbFactYfk" enableCountByExample="false" enableUpdateByExample="false"
+        <table tableName="ZZ_ACCESS" domainObjectName="ZzAccess" enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
 
 
