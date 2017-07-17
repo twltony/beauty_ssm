@@ -33,6 +33,11 @@ public class ZzUserImpl implements ZzUserService {
 	}
 
 	@Override
+	public List<ZzUser> getListRoleByName(String username) {
+		return 	zzUserDao.queryForList(username);
+	}
+
+	@Override
 	public int deleteByPrimaryKey(String uId) {
 		return  zzUserDao.deleteByPrimaryKey(uId);
 	}
@@ -48,6 +53,10 @@ public class ZzUserImpl implements ZzUserService {
 
 	@Override
 	public ZzUser selectByPrimaryKey(String uId){
+		return zzUserDao.selectByPrimaryKey(uId);
+	}
+	@Override
+	public ZzUser selectByUserName(String uId){
 		return zzUserDao.selectByPrimaryKey(uId);
 	}
 

@@ -19,13 +19,26 @@ public class ZzRoleImpl implements ZzRoleService {
 	private ZzRoleDao ZzRoleDao;
 	@Autowired
 	private RedisCache cache;
-	
-	
+
+	@Override
+	public List<ZzRole> getAllList(){
+		return ZzRoleDao.getAllList();
+	}
+	@Override
+	public int updateByPrimaryKey(ZzRole record){
+		return ZzRoleDao.updateByPrimaryKey(record);
+	}
+
 	@Override
 	public int insert(ZzRole zzRole) {
-		System.out.println(1);
 		return 	ZzRoleDao.insert(zzRole);
 	}
+
+	@Override
+	public int deleteByPrimaryKey(String uId) {
+		return  ZzRoleDao.deleteByPrimaryKey(uId);
+	}
+
 
 
 
