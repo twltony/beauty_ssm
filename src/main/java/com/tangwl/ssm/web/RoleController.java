@@ -34,8 +34,8 @@ public class RoleController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/delete", method = RequestMethod.GET)
-	public int deleteUser(HttpServletResponse response,HttpServletRequest request) {
+	@RequestMapping(value = "/delete", method = RequestMethod.POST)
+	public int deleteRole(HttpServletResponse response,HttpServletRequest request) {
 		response.setHeader("Access-Control-Allow-Origin","*");
 		String rId = request.getParameter("roleId");
 		int result = zzRoleService.deleteByPrimaryKey(rId);
@@ -43,13 +43,13 @@ public class RoleController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/insert", method = RequestMethod.GET)
-	public int insertUser(HttpServletResponse response,HttpServletRequest request) {
+	@RequestMapping(value = "/insert", method = RequestMethod.POST)
+	public int insertRole(HttpServletResponse response,HttpServletRequest request) {
 		response.setHeader("Access-Control-Allow-Origin","*");
-		String username=request.getParameter("rolename");
-		String descriptions =request.getParameter("descriptions");
+		String rolename=request.getParameter("roleName");
+		String descriptions =request.getParameter("roleDescription");
 		ZzRole zzRole = new ZzRole();
-		zzRole.setRoleName(username);
+		zzRole.setRoleName(rolename);
 		zzRole.setDescriptions(descriptions);
 		int result = zzRoleService.insert(zzRole);
 		return result;
@@ -57,7 +57,7 @@ public class RoleController {
 
 	@ResponseBody
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public int updateUser(HttpServletRequest request, HttpServletResponse response) {
+	public int updateRole(HttpServletRequest request, HttpServletResponse response) {
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		System.out.println(request.getParameterNames());
 		String role = request.getParameter("role");

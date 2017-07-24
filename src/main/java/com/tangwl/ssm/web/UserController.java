@@ -3,8 +3,11 @@ package com.tangwl.ssm.web;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.tangwl.ssm.entity.User;
+import com.tangwl.ssm.entity.ZzAccess;
 import com.tangwl.ssm.entity.ZzUser;
 import com.tangwl.ssm.service.UserService;
+import com.tangwl.ssm.service.ZzAccessService;
+import com.tangwl.ssm.service.ZzUserRoleService;
 import com.tangwl.ssm.service.ZzUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +32,10 @@ public class UserController {
 
 	@Autowired
 	private ZzUserService zzUserService;
+	@Autowired
+	private ZzUserRoleService zzUserRoleService;
+	@Autowired
+	private ZzAccessService zzAccessService;
 
 	@ResponseBody
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
@@ -36,6 +43,45 @@ public class UserController {
 		response.setHeader("Access-Control-Allow-Origin","*");
 		List<ZzUser> userLists = zzUserService.getAllList(1,100);
 		return userLists;
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/accessLog", method = RequestMethod.POST)
+	public int accessLog(HttpServletResponse response, HttpServletRequest request) {
+		response.setHeader("Access-Control-Allow-Origin","*");
+		String username = request.getParameter("username");
+		ZzAccess access = new ZzAccess();
+		access.setUsername(username);
+		access.setAccesstime1(new Date());
+		access.setDevicename(request.getParameter("platform").equals("null")?"浏览器":request.getParameter("platform"));
+		access.setImei(request.getParameter("uuid").equals("null")?"0000":request.getParameter("uuid"));
+		access.setSubject(request.getParameter("subject"));
+		int result =  zzAccessService.insert(access);
+		return result;
+	}
+	@ResponseBody
+	@RequestMapping(value = "/listAccessLogs", method = RequestMethod.GET)
+	public List<ZzAccess> ListAccessLogs(HttpServletResponse response, HttpServletRequest request) {
+		response.setHeader("Access-Control-Allow-Origin","*");
+
+		return zzAccessService.selectAll();
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/selectByUserName", method = RequestMethod.POST)
+	public ZzUser getUserByName(HttpServletResponse response, HttpServletRequest request) {
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		String userName = request.getParameter("userName");
+		ZzUser user = zzUserService.selectByUserName(userName);
+		if (user == null) {
+			ZzUser nullUser = new ZzUser();
+			nullUser.setuId(null);
+			nullUser.setUsername(null);
+			nullUser.setPassword(null);
+			return nullUser;
+		} else {
+			return user;
+		}
 	}
 
 	@ResponseBody
@@ -70,12 +116,23 @@ public class UserController {
 
 	@ResponseBody
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public int updateUser(HttpServletRequest request, HttpServletResponse response) {
+	public String updateUser(HttpServletRequest request, HttpServletResponse response) {
 		response.setHeader("Access-Control-Allow-Origin", "*");
-		System.out.println(request.getParameterNames());
+		String message = "";
+
 		String user = request.getParameter("user");
 		ZzUser userobj = JSON.parseObject(user,ZzUser.class);
-		return zzUserService.updateByPrimaryKey(userobj);
+		int updateRoleResult = 0;
+		if(zzUserService.updateByPrimaryKey(userobj)==1){
+			if(userobj.getRole().size()>0){
+
+				zzUserRoleService.deleteByUid(userobj.getuId());
+				for(int i=0; i<userobj.getRole().size();i++){
+					updateRoleResult = zzUserRoleService.insertByUidAndRid(userobj.getuId(),userobj.getRole().get(i).getrId());
+				}
+			}
+		}
+		return message;
 	}
 
 }

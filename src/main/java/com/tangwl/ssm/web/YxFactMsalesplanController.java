@@ -153,11 +153,11 @@ public class YxFactMsalesplanController {
 //			e.printStackTrace();
 //		}
 
-		try{
-			setAccessStatus(username,"0000",time);
-		}catch (Exception e){
-			e.printStackTrace();
-		}
+//		try{
+//			setAccessStatus(username,"0000",time);
+//		}catch (Exception e){
+//			e.printStackTrace();
+//		}
 
 		Map<String ,Object> map = new HashMap<>();
 

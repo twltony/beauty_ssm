@@ -1,6 +1,8 @@
 package com.tangwl.ssm.service;
 
 import com.tangwl.ssm.entity.ZzUser;
+import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 

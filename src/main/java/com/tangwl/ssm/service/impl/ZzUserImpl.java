@@ -56,8 +56,8 @@ public class ZzUserImpl implements ZzUserService {
 		return zzUserDao.selectByPrimaryKey(uId);
 	}
 	@Override
-	public ZzUser selectByUserName(String uId){
-		return zzUserDao.selectByPrimaryKey(uId);
+	public ZzUser selectByUserName(String username){
+		return zzUserDao.selectByUserName(username);
 	}
 
 	@Override
