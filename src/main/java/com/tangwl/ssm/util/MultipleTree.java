@@ -67,7 +67,7 @@ public class MultipleTree {
             //data.dtnnrpelembusinmy - data.nmnysum3
             node.jy= bigToString(cdt.getDtnnrpelembusinmy().subtract(cdt.getNmnysum3())).equals("0")?"-":bigToString(cdt.getDtnnrpelembusinmy().subtract(cdt.getNmnysum3()));
             //(data.dtnnrpelembusinmy - data.nmnysum3)/data.nmnysum3
-            node.jyl = bigToString(cdt.getNmnysum3()).equals("0")?"-":(bigToString(cdt.getDtnnrpelembusinmy().subtract(cdt.getNmnysum3())).equals("0")?"-":bigToString(cdt.getDtnnrpelembusinmy().subtract(cdt.getNmnysum3()).divide(cdt.getNmnysum3(),2, RoundingMode.HALF_UP)));
+            node.jyl = bigToString(cdt.getNmnysum3()).equals("0")?"-":(bigToString(cdt.getDtnnrpelembusinmy().subtract(cdt.getNmnysum3())).equals("0")?"-":bigToString(cdt.getDtnnrpelembusinmy().subtract(cdt.getNmnysum3()).divide(cdt.getNmnysum3(),4, RoundingMode.HALF_UP)));
             node.parentId = cdt.getFathercode();
             nodeList.put(node.id, node);
         }

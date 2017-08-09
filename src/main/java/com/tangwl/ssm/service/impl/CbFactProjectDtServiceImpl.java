@@ -49,17 +49,17 @@ public class CbFactProjectDtServiceImpl implements CbFactProjectDtService {
 	 */
 	@Override
 	public List<CbFactProjectDt> getGcfxByVname(String vname) {
-		String cache_key =  RedisCache.CAHCENAME+"|CbFactProjectDt|"+"|getGcfxByVname|"+"|"+vname+"|";
-		//先去缓存中去数
-		List<CbFactProjectDt> result_cache = cache.getListCache(cache_key, CbFactProjectDt.class);
-		if(result_cache==null){
-			result_cache = cbFactProjectDtDao.queryGcfxByVname(vname);
-			cache.putCacheWithExpireTime(cache_key,result_cache,RedisCache.CAHCETIME);
-			LOG.info("put cache with key:"+cache_key);
-		}else{
-			LOG.info("get cache with key:"+cache_key);
-		}
-		return 	result_cache;
+//		String cache_key =  RedisCache.CAHCENAME+"|CbFactProjectDt|"+"|getGcfxByVname|"+"|"+vname+"|";
+//		//先去缓存中去数
+//		List<CbFactProjectDt> result_cache = cache.getListCache(cache_key, CbFactProjectDt.class);
+//		if(result_cache==null){
+//			result_cache = ;
+//			cache.putCacheWithExpireTime(cache_key,result_cache,RedisCache.CAHCETIME);
+//			LOG.info("put cache with key:"+cache_key);
+//		}else{
+//			LOG.info("get cache with key:"+cache_key);
+//		}
+		return 	cbFactProjectDtDao.queryGcfxByVname(vname);
 	}
 	/**
 	 * 建筑单方

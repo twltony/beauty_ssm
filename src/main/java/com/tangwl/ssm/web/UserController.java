@@ -53,8 +53,8 @@ public class UserController {
 		ZzAccess access = new ZzAccess();
 		access.setUsername(username);
 		access.setAccesstime1(new Date());
-		access.setDevicename(request.getParameter("platform").equals("null")?"浏览器":request.getParameter("platform"));
-		access.setImei(request.getParameter("uuid").equals("null")?"0000":request.getParameter("uuid"));
+		access.setDevicename(request.getParameter("platform")==null?"浏览器":request.getParameter("platform"));
+		access.setImei(request.getParameter("uuid")==null?"0000":request.getParameter("uuid"));
 		access.setSubject(request.getParameter("subject"));
 		int result =  zzAccessService.insert(access);
 		return result;

@@ -106,4 +106,18 @@ public class YxFee {
     public void setUnitname(String unitname) {
         this.unitname = unitname;
     }
+
+    public YxFee() {
+        this.costcode = "";
+        this.costname = "";
+        this.yyyy = "";
+        this.mm = "";
+        this.yyyyMm = new Date();
+        this.paylocal = 0.0;
+        this.FCPAYLOCAL = 0.0;
+        this.WYPAYLOCAL = 0.0;
+        this.DSPAYLOCAL = 0.0;
+        this.QTPAYLOCAL = 0.0;
+        this.unitname = "";
+    }
 }

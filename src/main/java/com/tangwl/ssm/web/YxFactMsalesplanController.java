@@ -85,32 +85,6 @@ public class YxFactMsalesplanController {
         LOG.info("invoke----------/user/list");
         String time = request.getParameter("time");
         String username = request.getParameter("username");
-//		try{
-//			DateFormat format= new SimpleDateFormat();
-//			Date dt = null;
-//			try{
-//				String res;
-//				SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//				long lt = new Long(time);
-//				dt = new Date(lt);
-//				//dt = format.parse(oldDate);
-//			}catch (Exception pe){
-//				pe.printStackTrace();
-//			}
-//
-//			ZzAccess za =  new ZzAccess();
-//			UUID uuid = UUID.randomUUID();
-//			String id = uuid.toString().split("-")[0];
-//			za.setId(id);
-//			za.setUsername(username);
-//			za.setImei("0000");
-//			za.setAccesstime1(new Date());
-//			za.setAccesstime2(dt);
-//			za.setDevicename("device");
-//			int i = zzAccessService.insert(za);
-//		}catch (Exception e){
-//			e.printStackTrace();
-//		}
         Map<String, Object> map = new HashMap<>();
         List<YxFactMsalesplan> list = yxFactMsalesplanService.getAllList();
         map.put("status", "success");
@@ -127,39 +101,6 @@ public class YxFactMsalesplanController {
         String time = request.getParameter("time");
         String username = request.getParameter("username");
 
-//		try{
-//			DateFormat format= new SimpleDateFormat();
-//			Date dt = null;
-//			try{
-//				String res;
-//				SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//				long lt = new Long(time);
-//				dt = new Date(lt);
-//				//dt = format.parse(oldDate);
-//			}catch (Exception pe){
-//				pe.printStackTrace();
-//			}
-//
-//			ZzAccess za =  new ZzAccess();
-//			UUID uuid = UUID.randomUUID();
-//			String id = uuid.toString().split("-")[0];
-//			za.setId(id);
-//			za.setUsername(username);
-//			za.setImei("0000");
-//			za.setAccesstime1(new Date());
-//			za.setAccesstime2(dt);
-//			za.setDevicename("device");
-//			int i = zzAccessService.insert(za);
-//		}catch (Exception e){
-//			e.printStackTrace();
-//		}
-
-//		try{
-//			setAccessStatus(username,"0000",time);
-//		}catch (Exception e){
-//			e.printStackTrace();
-//		}
-
         Map<String, Object> map = new HashMap<>();
 
         //数据年份/月份
@@ -167,7 +108,7 @@ public class YxFactMsalesplanController {
         List<String> yearList = new ArrayList<>();
         Date d = new Date();
         Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.DATE, -1);
+        cal.add(Calendar.DATE, -30);
         SimpleDateFormat sdfyy = new SimpleDateFormat("yyyy");
         SimpleDateFormat sdfmm = new SimpleDateFormat("MM");
         this.dataYear = sdfyy.format(d);
@@ -201,7 +142,10 @@ public class YxFactMsalesplanController {
         try {
             yxFeesSum = yxFeeService.getMonthSum("%" + dataMonth + "%");
         } catch (Exception e) {
-            yxFeesSum = yxFeeService.getMonthSum("%" + dataLastMonth + "%");
+            YxFee yf = new YxFee();
+            List<YxFee> tempList = new ArrayList<>();
+            tempList.add(yf);
+            yxFeesSum = tempList;
         }
         //System.out.println(formatUpperDouble(yxFeesSum.get(0).getPaylocal()/10000));
         map.put("yxFee", formatUpperDouble(yxFeesSum.get(0).getFCPAYLOCAL() / 10000));
